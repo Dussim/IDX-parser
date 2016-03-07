@@ -40,8 +40,8 @@ class IDXTest {
     @Test(expected = IOException::class)
     fun shouldCorrectlyClose() {
         val idx = IDX(NUMBERS_PATH, LABELS_PATH)
-        idx.use {
-            idx.next()
+        idx.use { numbers ->
+            numbers.next()
         }
         idx.next()
     }
