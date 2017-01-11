@@ -1,4 +1,7 @@
 # IDX-parser
+
+[![Build Status](https://travis-ci.org/cortwave/IDX-parser.svg?branch=master)](https://travis-ci.org/cortwave/IDX-parser)
+
 Program for parsing hand-written numbers in IDX format
 
 Parser for files from http://yann.lecun.com/exdb/mnist/
