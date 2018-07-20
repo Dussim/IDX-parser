@@ -8,25 +8,23 @@ import java.io.File
  * @author Dmitry Pranchuk
  * @since 3/7/16.
  */
-class IDX(val dataFile: File, val labelFile: File) : Iterator<Pair<Int, Array<Int>>>, Closeable {
+class IDX(val dataFile: InputStream, val labelFile: InputStream) : Iterator<Pair<Int, Array<Int>>>, Closeable {
 
-    constructor(dataPath: String, labelPath: String) : this(File(dataPath), File(labelPath))
+    constructor(dataPath: String, labelPath: String) : this(FileInputStream(dataPath), FileInputStream(labelPath))
 
-    private val numberBytes: DataInputStream
-    private val labelBytes: DataInputStream
+    private val numberBytes = DataInputStream(BufferedInputStream(dataFile))
+    private val labelBytes = DataInputStream(BufferedInputStream(labelFile))
     val numberOfCols: Int
     val numberOfRows: Int
     val numbersCount: Int
-
+    val labelsCount: Int
     init {
         val NUMBERS_MAGIC_NUMBER = 2051
         val LABEL_MAGIC_NUMBER = 2049
-        numberBytes = DataInputStream(dataFile.inputStream())
-        labelBytes = DataInputStream(labelFile.inputStream())
         checkMagicNumber(numberBytes, NUMBERS_MAGIC_NUMBER)
         checkMagicNumber(labelBytes, LABEL_MAGIC_NUMBER)
         numbersCount = numberBytes.readInt()
-        val labelsCount = labelBytes.readInt()
+        labelsCount = labelBytes.readInt()
         numberOfRows = numberBytes.readInt()
         numberOfCols = numberBytes.readInt()
     }
